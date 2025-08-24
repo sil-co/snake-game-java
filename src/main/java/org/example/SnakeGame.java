@@ -8,22 +8,40 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Random;
 
+// It extends JPanel (so we can draw graphics in the window)
+// It implements ActionListener (so we can update the game every tick using a Timer)
+// It implements KeyListener (so we can capture keyboard input to move the snake)
 public class SnakeGame extends JPanel implements ActionListener, KeyListener {
+    // Size (in pixels) of each "tile" (snake body part and food)
     private final int TILE_SIZE = 25; // Each square size
     private final int WIDTH = 600;
     private final int HEIGHT = 600;
+    // Maximum number of tiles that can fit in the game area.
+    // This also represents the maximum possible length of the snake
+    // (if it fills the whole screen).
     private final int ALL_TILES = (WIDTH * HEIGHT) / (TILE_SIZE * TILE_SIZE);
 
+    // Array holding the X positions of the snake's body segments.
+    // x[0] = head of the snake, x[1] = first body part, etc.
     private final int[] x = new int[ALL_TILES]; // Snake X positions
+
+    // Array holding the Y positions of the snake's body segments.
+    // y[0] = head, y[1] = body, aligned with x[].
     private final int[] y = new int[ALL_TILES]; // Snake Y positions
 
     private int bodyParts = 3; // Initial snake length
     private int foodEaten; // Score
+
+    // Current X position of the food (randomly generated).
     private int foodX; // Food X
+    // Current Y position of the food (randomly generated).
     private int foodY; // Food Y
 
     private char direction = 'R'; // U D L R
     private boolean running = false;
+
+    // Swing Timer object that triggers game updates at a fixed interval
+    // (for movement, collision checks, repainting).
     private Timer timer;
     private Random random;
 
